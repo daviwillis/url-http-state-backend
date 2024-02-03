@@ -4,9 +4,14 @@ import Product from '#models/product'
 
 export default class ProductsController {
   public async index({}: HttpContext) {
-    const products = (await Product.all()).toSorted((a, b) =>
-      a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
-    )
+    //Ordenar por ordem alfabetica nome produto
+
+    // const products = (await Product.all()).toSorted((a, b) =>
+    //   a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+    // )
+
+    //ultimo criado - ultimo da fila
+    const products = (await Product.all()).toSorted((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
 
     return {
       data: products,
